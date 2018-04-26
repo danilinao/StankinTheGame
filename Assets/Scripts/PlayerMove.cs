@@ -2,12 +2,12 @@
 
 public class PlayerMove : MonoBehaviour
 {
-    CharacterController charControl;
     public float walkSpeed;
     public float runSpeed;
     public bool cameraShake;
 
     private float speed;
+    private CharacterController charControl;
 
     void Awake()
     {
