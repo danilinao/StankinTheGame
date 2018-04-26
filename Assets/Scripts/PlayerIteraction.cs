@@ -13,7 +13,7 @@ public class PlayerIteraction : MonoBehaviour {
 	}
 	
 	void Update () {
-		
+
 	}
 
     void FixedUpdate()
@@ -24,6 +24,10 @@ public class PlayerIteraction : MonoBehaviour {
             if(hit.collider.gameObject.CompareTag("Human"))
             {
                 showHumaInteract = true;
+				if (Input.GetKeyDown (KeyCode.E)) {
+					hit.collider.gameObject.GetComponent<UseDialog> ().showDialog = true;
+
+				}
             }
             else
             {
