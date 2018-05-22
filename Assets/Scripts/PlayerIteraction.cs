@@ -7,9 +7,10 @@ public class PlayerIteraction : MonoBehaviour {
     public float maxDistance = 10;
     public bool showHumaInteract;
     public GUIStyle boxStyle;
+    public int curNPCId;
 
     void Start () {
-		
+        curNPCId = -1;
 	}
 	
 	void Update () {
@@ -25,12 +26,13 @@ public class PlayerIteraction : MonoBehaviour {
             {
                 showHumaInteract = true;
 				if (Input.GetKeyDown (KeyCode.E)) {
-					hit.collider.gameObject.GetComponent<UseDialog> ().showDialog = true;
-
+                    curNPCId = hit.collider.gameObject.GetComponent<NPCScript>().npcId;
+                    hit.collider.gameObject.GetComponent<DialogSystem.UseDialog> ().DoDialog = true;
 				}
             }
             else
             {
+                curNPCId = -1;
                 showHumaInteract = false;
             }
 

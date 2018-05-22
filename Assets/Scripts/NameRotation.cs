@@ -12,7 +12,8 @@ public class NameRotation : MonoBehaviour {
 	}
 	
 	void Update () {
-        transform.Find("Name").transform.LookAt(GameObject.FindWithTag("Player").transform.position);
-        transform.Find("Name").transform.Rotate(new Vector3(0, 180, 0));
+        this.gameObject.transform.GetChild(0).transform.LookAt(GameObject.FindWithTag("Player").transform.position);
+        this.gameObject.transform.GetChild(0).transform.Rotate(new Vector3(0, 180, 0));
+        this.gameObject.transform.GetChild(1).transform.LookAt(GameObject.FindWithTag("Player").transform.position);
     }
 }
