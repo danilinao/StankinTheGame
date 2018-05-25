@@ -13,7 +13,7 @@ namespace DialogSystem
         {
             base.OnInspectorGUI();
             UseDialog ud = (UseDialog) target;
-            DialogObject go = ud.DialogObject;
+            DialogObject go = GameObject.FindWithTag("DialogsInspector").GetComponent<DialogsList>().dialogsList[ud.dialogId];
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("Open DialogObject Window"))
             {

@@ -5,15 +5,33 @@ using QuestSystem;
 using UnityEditor;
 using System;
 
-[System.Serializable]
-public class QuestHolder
+public enum questType
 {
+    PositionQuest,
+    TalkQuest
+};
+public enum whatNext
+{
+    Nothing,
+    Dialog,
+    Quest
+};
+
+[System.Serializable]
+public class QuestHolder 
+{
+    public bool canTakeAgain;
     public bool complete;
     public bool taken;
     public int progress;
-    public string type;
+    public questType type;
     public PositionQuestObject positionQuest;
     public TalkQuestObject talkQuest;
+    public whatNext whatNext;
+    public int nextDialog;
+    public int nextQuest;
+
+
 
     public QuestHolder()
     {
@@ -35,37 +53,50 @@ public class QuestHolder
 }
 
 [CustomPropertyDrawer(typeof(QuestHolder))]
-public class QuestHolderDrawer : PropertyDrawer
+public class SkillGainLevelInspector : PropertyDrawer
 {
-    // Draw the property inside the given rect
-    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    public override void OnGUI(Rect rect, SerializedProperty prop, GUIContent label)
     {
-        // Using BeginProperty / EndProperty on the parent property means that
-        // prefab override logic works on the entire property.
-        EditorGUI.BeginProperty(position, label, property);
+        
+        SerializedProperty complete = prop.FindPropertyRelative("complete");
+        SerializedProperty progress = prop.FindPropertyRelative("progress");
+        SerializedProperty taken = prop.FindPropertyRelative("taken");
+        SerializedProperty type = prop.FindPropertyRelative("type");
+        SerializedProperty positionQuest = prop.FindPropertyRelative("positionQuest");
+        SerializedProperty talkQuest = prop.FindPropertyRelative("talkQuest");
+        SerializedProperty next = prop.FindPropertyRelative("whatNext");
+        SerializedProperty nextDialog = prop.FindPropertyRelative("nextDialog");
+        SerializedProperty nextQuest = prop.FindPropertyRelative("nextQuest");
 
-        // Draw label
-        position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
+        EditorGUI.indentLevel++;
+        prop.isExpanded = EditorGUI.Foldout(new Rect(rect.x, rect.y, rect.width, 16), prop.isExpanded, "Item " + EditorGUI.indentLevel);
+        if (prop.isExpanded)
+        {
+            EditorGUI.PropertyField(new Rect(rect.x, rect.y + 16, rect.width, 16), complete, new GUIContent("Complete: "));
+            EditorGUI.PropertyField(new Rect(rect.x, rect.y + 32, rect.width, 16), progress, new GUIContent("Progress: "));
+            EditorGUI.PropertyField(new Rect(rect.x, rect.y + 48, rect.width, 16), taken, new GUIContent("Taken: "));
+            EditorGUI.PropertyField(new Rect(rect.x, rect.y + 64, rect.width, 16), type, new GUIContent("Type: "));
+            if ((questType)type.intValue == questType.PositionQuest)
+                EditorGUI.PropertyField(new Rect(rect.x, rect.y + 80, rect.width, 16), positionQuest, new GUIContent("Quest: "));
+            else if ((questType)type.intValue == questType.TalkQuest)
+                EditorGUI.PropertyField(new Rect(rect.x, rect.y + 80, rect.width, 16), talkQuest, new GUIContent("Quest: "));
+            EditorGUI.PropertyField(new Rect(rect.x, rect.y + 96, rect.width, 16), next, new GUIContent("What Next: "));
+            if ((whatNext)next.intValue == whatNext.Dialog)
+                EditorGUI.PropertyField(new Rect(rect.x, rect.y + 112, rect.width, 16), nextDialog, new GUIContent("DialogId: "));
+            else if ((whatNext)next.intValue == whatNext.Quest)
+                EditorGUI.PropertyField(new Rect(rect.x, rect.y + 112, rect.width, 16), nextQuest, new GUIContent("QuestId: "));
+        }
+        EditorGUI.indentLevel--;
+    }
 
-        // Don't make child fields be indented
-        var indent = EditorGUI.indentLevel;
-        EditorGUI.indentLevel = 0;
-
-        // Draw fields - passs GUIContent.none to each so they are drawn without labels
-        EditorGUI.PropertyField(new Rect(position.x, position.y, 10 , position.height), property.FindPropertyRelative("complete"), GUIContent.none);
-        EditorGUI.PropertyField(new Rect(position.x + 15, position.y, 10 , position.height), property.FindPropertyRelative("taken"), GUIContent.none);
-        EditorGUI.PropertyField(new Rect(position.x + 30, position.y, 30 , position.height), property.FindPropertyRelative("progress"), GUIContent.none);
-        EditorGUI.PropertyField(new Rect(position.x + 65, position.y, 100, position.height), property.FindPropertyRelative("type"), GUIContent.none);
-        EditorGUI.PropertyField(new Rect(position.x + 170, position.y, 150, position.height), property.FindPropertyRelative("positionQuest"), GUIContent.none);
-        EditorGUI.PropertyField(new Rect(position.x + 325, position.y, 150, position.height), property.FindPropertyRelative("talkQuest"), GUIContent.none);
-
-        // Set indent back to what it was
-        EditorGUI.indentLevel = indent;
-
-        EditorGUI.EndProperty();
+    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+    {
+        if (property.isExpanded)
+            return 128;
+        else
+            return 16;
     }
 }
-
 [Serializable]
 public class QuestList : MonoBehaviour {
 

@@ -197,7 +197,7 @@ GameObject:
   - component: {fileID: 222122526}
   - component: {fileID: 222122527}
   m_Layer: 0
-  m_Name: QuestInspector
+  m_Name: QuestsInspector
   m_TagString: QuestInspector
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -443,7 +443,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  currentQuests: 
+  currentQuests: 00000000
   questsList: {fileID: 0}
 --- !u!114 &222122527
 MonoBehaviour:
@@ -459,22 +459,31 @@ MonoBehaviour:
   questsList:
   - complete: 0
     taken: 0
-    progress: 123
-    type: 
-    positionQuest: {fileID: 0}
+    progress: 0
+    type: 0
+    positionQuest: {fileID: 11400000, guid: e49c8a177c4334b43b28dd0ea85b0213, type: 2}
     talkQuest: {fileID: 0}
+    whatNext: 2
+    nextDialog: 0
+    nextQuest: 2
   - complete: 0
     taken: 0
     progress: 0
-    type: 
-    positionQuest: {fileID: 0}
+    type: 0
+    positionQuest: {fileID: 11400000, guid: f31d0cbf9a58c2240a77cdf6b9e81956, type: 2}
     talkQuest: {fileID: 0}
+    whatNext: 0
+    nextDialog: 0
+    nextQuest: 0
   - complete: 0
     taken: 0
     progress: 0
-    type: 
+    type: 1
     positionQuest: {fileID: 0}
-    talkQuest: {fileID: 0}
+    talkQuest: {fileID: 11400000, guid: 5d75d3b61c54a1a4297d553ec34227bd, type: 2}
+    whatNext: 0
+    nextDialog: 0
+    nextQuest: 0
 --- !u!1 &324738388
 GameObject:
   m_ObjectHideFlags: 0
@@ -499,8 +508,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 324738388}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 1, z: 0.33}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0.818}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 905776610}
   m_RootOrder: 4
@@ -822,10 +831,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab68b239d00a988499c930e8577fb06b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questInspector: {fileID: 0}
+  questsInspector: {fileID: 0}
+  dialogsInspector: {fileID: 0}
   haveQuest: {fileID: 2100000, guid: 48da8eec01c9a00479340f4684818bf6, type: 2}
   canPassQuest: {fileID: 2100000, guid: 77b4476f1c8aea0468c820ea2486e844, type: 2}
   questsList: {fileID: 0}
+  dialogsList: {fileID: 0}
   boxStyle:
     m_Name: 
     m_Normal:
@@ -1094,7 +1105,7 @@ MonoBehaviour:
     m_FixedHeight: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
-  DialogObject: {fileID: 11400000, guid: ead3550b3604215429e7ec609f55152f, type: 2}
+  dialogId: 0
   DoDialog: 0
   _tmp:
     ButtonName: 
@@ -1169,6 +1180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   renderTexture: {fileID: 8400000, guid: 540369151746a1f4eb620ad6be45b4f3, type: 2}
+  mmCamera: {fileID: 0}
 --- !u!1 &1303936803
 GameObject:
   m_ObjectHideFlags: 0
@@ -1192,7 +1204,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1303936803}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 60, z: 0}
+  m_LocalPosition: {x: 0, y: 45, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 905776610}
@@ -1411,3 +1423,45 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5de1085108453ec46a9043c1e29d8dea, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1768827885
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1768827887}
+  - component: {fileID: 1768827886}
+  m_Layer: 0
+  m_Name: DialogInspector
+  m_TagString: DialogsInspector
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1768827886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1768827885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5e2add836d0ea44ba01c03bc9df1172, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogsList:
+  - {fileID: 11400000, guid: ead3550b3604215429e7ec609f55152f, type: 2}
+--- !u!4 &1768827887
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1768827885}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 8.864017, y: -13.31949, z: 18.51322}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

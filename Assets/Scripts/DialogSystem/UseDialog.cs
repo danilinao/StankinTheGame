@@ -7,31 +7,37 @@ namespace DialogSystem
     public class UseDialog : MonoBehaviour
     {
 
-        public GameObject questInspector;
+        public GameObject questsInspector;
+        public GameObject dialogsInspector;
         private Vector2 _scrollPos = Vector2.zero;
         private Vector2 _scrollPos2 = Vector2.zero;
         public Material haveQuest;
         public Material canPassQuest;
         public QuestList questsList;
+        public DialogsList dialogsList;
 
         public GUIStyle boxStyle;
         public GUIStyle textBoxStyle;
         public GUIStyle textLabelStyle;
         public GUIStyle answerBoxStyle;
-        public DialogObject DialogObject;
+        public int dialogId;
         public bool DoDialog = false;
         [HideInInspector] public Node _tmp;
 
         void Start()
         {
+            questsInspector = GameObject.FindWithTag("QuestInspector");
+            questsList = questsInspector.GetComponent<QuestList>();
 
-            questsList = GameObject.Find("QuestInspector").GetComponent<QuestList>();
+            dialogsInspector = GameObject.FindWithTag("DialogsInspector");
+            dialogsList = dialogsInspector.GetComponent<DialogsList>();
+
             ResetDialog();
-            questInspector = GameObject.FindWithTag("QuestInspector");
+
             this.gameObject.transform.GetChild(1).GetComponentInChildren<MeshRenderer>().material = null;
-            for (int i = 0; i < DialogObject._dialogs.Count; i++)
+            for (int i = 0; i < dialogsList.dialogsList[dialogId]._dialogs.Count; i++)
             {
-                if(questsList.questsList[DialogObject._dialogs[i].questId].positionQuest != null || questsList.questsList[DialogObject._dialogs[i].questId].talkQuest != null)
+                if(questsList.questsList[dialogsList.dialogsList[dialogId]._dialogs[i].questId].positionQuest != null || questsList.questsList[dialogsList.dialogsList[dialogId]._dialogs[i].questId].talkQuest != null)
                 {
                     this.gameObject.transform.GetChild(1).GetComponentInChildren<MeshRenderer>().material = haveQuest;
                 }
@@ -41,9 +47,9 @@ namespace DialogSystem
         private void Update()
         {
             bool quest = false;
-            for (int i = 0; i < DialogObject._dialogs.Count; i++)
+            for (int i = 0; i < dialogsList.dialogsList[dialogId]._dialogs.Count; i++)
             {
-                if (questsList.questsList[DialogObject._dialogs[i].questId].positionQuest != null || questsList.questsList[DialogObject._dialogs[i].questId].talkQuest != null)
+                if (questsList.questsList[dialogsList.dialogsList[dialogId]._dialogs[i].questId].positionQuest != null || questsList.questsList[dialogsList.dialogsList[dialogId]._dialogs[i].questId].talkQuest != null)
                 {
                     quest = true;
                     break;
@@ -84,14 +90,14 @@ namespace DialogSystem
                 for (int i = 0; i < _tmp.Links.Count; i++)
                 {
                     GUIContent content = new GUIContent();
-                    content.text = DialogObject._dialogs[_tmp.Links[i]].ButtonName;
+                    content.text = dialogsList.dialogsList[dialogId]._dialogs[_tmp.Links[i]].ButtonName;
                     if (GUILayout.Button(content))
                     {
-                        if (questsList.questsList[DialogObject._dialogs[_tmp.Links[i]].questId].positionQuest != null || questsList.questsList[DialogObject._dialogs[_tmp.Links[i]].questId].talkQuest != null)
+                        if (questsList.questsList[dialogsList.dialogsList[dialogId]._dialogs[_tmp.Links[i]].questId].positionQuest != null || questsList.questsList[dialogsList.dialogsList[dialogId]._dialogs[_tmp.Links[i]].questId].talkQuest != null)
                         {
-                            questInspector.GetComponent<QuestHandler>().currentQuests.Add(DialogObject._dialogs[_tmp.Links[i]].questId);
+                            questsInspector.GetComponent<QuestHandler>().currentQuests.Add(dialogsList.dialogsList[dialogId]._dialogs[_tmp.Links[i]].questId);
                         }
-                        _tmp = DialogObject._dialogs[_tmp.Links[i]];
+                        _tmp = dialogsList.dialogsList[dialogId]._dialogs[_tmp.Links[i]];
                     }
 
                 }
@@ -110,11 +116,11 @@ namespace DialogSystem
         {
             DoDialog = false;
             UnFreezPlayer();
-            for (int i = 0; i < DialogObject._dialogs.Count; i++)
+            for (int i = 0; i < dialogsList.dialogsList[dialogId]._dialogs.Count; i++)
             {
-                if (DialogObject._dialogs[i].begin)
+                if (dialogsList.dialogsList[dialogId]._dialogs[i].begin)
                 {
-                    _tmp = DialogObject._dialogs[i];
+                    _tmp = dialogsList.dialogsList[dialogId]._dialogs[i];
                 }
             }
         }

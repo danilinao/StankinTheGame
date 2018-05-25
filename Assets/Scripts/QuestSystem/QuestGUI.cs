@@ -14,7 +14,7 @@ public class QuestGUI : MonoBehaviour {
     
     void Start () {
 
-        questsList = GameObject.Find("QuestInspector").GetComponent<QuestList>();
+        questsList = GameObject.FindWithTag("QuestInspector").GetComponent<QuestList>();
         lockCursor = true;
         headerStyle.fixedHeight = (Screen.height / 2)/10;
         questHandler = GetComponent<QuestHandler>();
@@ -42,7 +42,7 @@ public class QuestGUI : MonoBehaviour {
         GUILayout.BeginArea(new Rect(0, (Screen.height / 2) / 10, Screen.width / 6,Screen.height / 2 - (Screen.height / 2)/10), questStyle);
         for(int i = 0; i < questHandler.currentQuests.Count; i++)
         {
-            if(questsList.questsList[questHandler.currentQuests[i]].type == "positionQuest")
+            if(questsList.questsList[questHandler.currentQuests[i]].type == questType.PositionQuest)
             {
                 GUILayout.BeginHorizontal();
                 GUILayout.Label(questsList.questsList[questHandler.currentQuests[i]].positionQuest.name + "\n");
@@ -50,7 +50,7 @@ public class QuestGUI : MonoBehaviour {
                 GUILayout.EndHorizontal();
                 GUILayout.Label("--" + questsList.questsList[questHandler.currentQuests[i]].positionQuest.description + "\n");
             }
-            else if (questsList.questsList[questHandler.currentQuests[i]].type == "talkQuest")
+            else if (questsList.questsList[questHandler.currentQuests[i]].type == questType.TalkQuest)
             {
                 GUILayout.BeginHorizontal();
                 GUILayout.Label(questsList.questsList[questHandler.currentQuests[i]].talkQuest.name + "\n");

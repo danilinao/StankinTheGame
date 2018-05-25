@@ -22,7 +22,7 @@ namespace DialogSystem
         private void Init()
         {
             
-            questsList = GameObject.Find("QuestInspector").GetComponent<QuestList>();
+            questsList = GameObject.FindWithTag("QuestInspector").GetComponent<QuestList>();
             Dialogs = DialogObject._dialogs;
             Windows = new List<Rect>();
             for (int i = 0; i < Dialogs.Count; i++)
@@ -109,13 +109,13 @@ namespace DialogSystem
 
                         if (index == 0)
                         {
-                            questsList.questsList[Dialogs[FocusingID].questId].type = "positionQuest";
+                            questsList.questsList[Dialogs[FocusingID].questId].type = questType.PositionQuest;
                             questsList.questsList[Dialogs[FocusingID].questId].positionQuest = (QuestSystem.PositionQuestObject)EditorGUILayout.ObjectField("Quest", questsList.questsList[Dialogs[FocusingID].questId].positionQuest, typeof(QuestSystem.PositionQuestObject),true);
                             questsList.questsList[Dialogs[FocusingID].questId].talkQuest = null;
                         }
                         else if(index == 1)
                         {
-                            questsList.questsList[Dialogs[FocusingID].questId].type = "talkQuest";
+                            questsList.questsList[Dialogs[FocusingID].questId].type = questType.TalkQuest;
                             questsList.questsList[Dialogs[FocusingID].questId].talkQuest = (QuestSystem.TalkQuestObject)EditorGUILayout.ObjectField("Quest", questsList.questsList[Dialogs[FocusingID].questId].talkQuest, typeof(QuestSystem.TalkQuestObject), true);
                             questsList.questsList[Dialogs[FocusingID].questId].positionQuest = null;
                         }

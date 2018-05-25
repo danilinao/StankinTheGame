@@ -42,6 +42,7 @@ public class PlayerMove : MonoBehaviour
         charControl.SimpleMove(moveDirForward);
         if(cameraShake && (horiz != 0 || vert != 0))
         {
+            GetComponentInChildren<Animator>().enabled = true;
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 GetComponentInChildren<Animator>().SetFloat("speed", 1.3f);
@@ -54,6 +55,7 @@ public class PlayerMove : MonoBehaviour
         else
         {
             GetComponentInChildren<Animator>().SetFloat("speed", 0f);
+            GetComponentInChildren<Animator>().enabled = false;
         }
 
     }

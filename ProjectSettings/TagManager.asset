@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Human
   - QuestInspector
+  - DialogsInspector
   layers:
   - Default
   - TransparentFX
