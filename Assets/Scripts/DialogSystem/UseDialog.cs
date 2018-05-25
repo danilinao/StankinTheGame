@@ -91,13 +91,29 @@ namespace DialogSystem
                 {
                     GUIContent content = new GUIContent();
                     content.text = dialogsList.dialogsList[dialogId]._dialogs[_tmp.Links[i]].ButtonName;
-                    if (GUILayout.Button(content))
+                    if (dialogsList.dialogsList[dialogId]._dialogs[_tmp.Links[i]].questNotTaken && !questsList.questsList[dialogsList.dialogsList[dialogId]._dialogs[_tmp.Links[i]].questIdNotTaken].taken)
                     {
-                        if (questsList.questsList[dialogsList.dialogsList[dialogId]._dialogs[_tmp.Links[i]].questId].positionQuest != null || questsList.questsList[dialogsList.dialogsList[dialogId]._dialogs[_tmp.Links[i]].questId].talkQuest != null)
+                        if (GUILayout.Button(content))
                         {
-                            questsInspector.GetComponent<QuestHandler>().currentQuests.Add(dialogsList.dialogsList[dialogId]._dialogs[_tmp.Links[i]].questId);
+                            if (questsList.questsList[dialogsList.dialogsList[dialogId]._dialogs[_tmp.Links[i]].questId].positionQuest != null || questsList.questsList[dialogsList.dialogsList[dialogId]._dialogs[_tmp.Links[i]].questId].talkQuest != null)
+                            {
+                                questsInspector.GetComponent<QuestHandler>().currentQuests.Add(dialogsList.dialogsList[dialogId]._dialogs[_tmp.Links[i]].questId);
+                                questsList.questsList[dialogsList.dialogsList[dialogId]._dialogs[_tmp.Links[i]].questId].taken = true;
+                            }
+                            _tmp = dialogsList.dialogsList[dialogId]._dialogs[_tmp.Links[i]];
                         }
-                        _tmp = dialogsList.dialogsList[dialogId]._dialogs[_tmp.Links[i]];
+                    }
+                    else if(!dialogsList.dialogsList[dialogId]._dialogs[_tmp.Links[i]].questNotTaken)
+                    {
+                        if (GUILayout.Button(content))
+                        {
+                            if (questsList.questsList[dialogsList.dialogsList[dialogId]._dialogs[_tmp.Links[i]].questId].positionQuest != null || questsList.questsList[dialogsList.dialogsList[dialogId]._dialogs[_tmp.Links[i]].questId].talkQuest != null)
+                            {
+                                questsInspector.GetComponent<QuestHandler>().currentQuests.Add(dialogsList.dialogsList[dialogId]._dialogs[_tmp.Links[i]].questId);
+                                questsList.questsList[dialogsList.dialogsList[dialogId]._dialogs[_tmp.Links[i]].questId].taken = true;
+                            }
+                            _tmp = dialogsList.dialogsList[dialogId]._dialogs[_tmp.Links[i]];
+                        }
                     }
 
                 }
